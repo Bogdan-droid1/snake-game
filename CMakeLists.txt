@@ -43,10 +43,10 @@ target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC SHADERS_PATH="${CMAKE_
 
 
 target_sources("${CMAKE_PROJECT_NAME}" PRIVATE ${MY_SOURCES}    
-"src/headerfiles/ShaderClass.h" "src/cppfiles/ShaderClass.cpp"
 "src/headerfiles/GameClass.h" "src/cppfiles/GameClass.cpp"
-"src/headerfiles/TextureClass.h" "src/cppfiles/TextureClass.cpp"
-"src/headerfiles/RendererClass.h" "src/cppfiles/RendererClass.cpp")
+"src/headerfiles/RendererClass.h" "src/cppfiles/RendererClass.cpp"
+"src/headerfiles/ShaderClass.h" "src/cppfiles/ShaderClass.cpp"
+"src/headerfiles/TextureClass.h" "src/cppfiles/TextureClass.cpp")
 
 
 if(MSVC)

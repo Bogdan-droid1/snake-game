@@ -92,6 +92,15 @@ Renderer::Renderer()
 
 	texPath = RESOURCES_PATH"backGround.jpg";
 	m_texBackground.Init(texPath, GL_RGB);
+
+	texPath = RESOURCES_PATH"Start-scene.PNG";
+	m_StartScene.Init(texPath, GL_RGBA);
+
+	texPath = RESOURCES_PATH"Scene-You Won!.PNG";
+	m_StartScene.Init(texPath, GL_RGBA);
+
+	texPath = RESOURCES_PATH"Scene-You Lost!.PNG";
+	m_StartScene.Init(texPath, GL_RGBA);
 }
 
 Renderer::~Renderer()
@@ -104,10 +113,30 @@ Renderer::~Renderer()
 	glfwTerminate();
 }
 
-void Renderer::render(const std::array <std::array <char, 10>, 10>& grid, const std::vector <std::tuple<int16_t, int16_t, char, int16_t>> &snake)
+void Renderer::render(const std::array <std::array <char, 10>, 10>& grid, const std::vector <std::tuple<int16_t, int16_t, char, int16_t>> &snake, int isWin)
 {
 	glClearColor(0.3f, 0.5f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	if (gameState == gameStart)
+	{
+		m_shader.setInt("texture", 4); //Start-scene.PNG
+		m_shader.setMat4("mat", glm::mat4(1.0f));
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		return;
+	}
+	else if (gameState == gameEnd)
+	{
+		if (isWin == 1)
+			m_shader.setInt("texture", 5);
+		else if (isWin == 2)
+			m_shader.setInt("texture", 6);
+
+		m_shader.setMat4("mat", glm::mat4(1.0f));
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		return;
+	}
+
 
 	for (uint16_t j = 0;j <= 9;j++)
 	{
@@ -129,6 +158,8 @@ void Renderer::render(const std::array <std::array <char, 10>, 10>& grid, const 
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		}
 	}
+
+	//glfwSwapBuffers(window);
 }
 
 int16_t Renderer::setTexture(const std::array <std::array <char, 10>, 10>& grid, uint16_t i, uint16_t j) const
