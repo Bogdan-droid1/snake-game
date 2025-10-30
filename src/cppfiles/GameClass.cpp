@@ -136,12 +136,13 @@ bool Game::isdead()
 
 void Game::handleInput(GLFWwindow* window)
 {
-    lastinput = input;
     auto start = std::chrono::steady_clock::now();
     while (std::chrono::steady_clock::now() - start < 0.45s)
     {
         processInput(window);
     }
+
+    lastinput = input;
     get<0>(lastHeadPos) = get<0>(snake.at(0));
     get<1>(lastHeadPos) = get<1>(snake.at(0));
 
